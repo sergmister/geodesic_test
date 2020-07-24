@@ -1,10 +1,22 @@
-#ifndef GEODESIC_Y
-#define GEODESIC_Y
+#pragma once
 #include <vector>
 #include <stdint.h>
 #include "board.h"
 
+extern int neighbors[93][6];
+
+template <typename T> // put in a header file.
+void print(T msg) {
+    std::cout << msg << std::endl;
+}
+
 namespace geodesic_y {
+
+extern int n;
+extern std::vector<std::vector<uint16_t>> graph;
+extern std::vector<uint16_t> graph_left;
+extern std::vector<uint16_t> graph_bottem;
+extern std::vector<uint16_t> graph_right;
 
 struct State {
 
@@ -20,15 +32,15 @@ struct State {
     int8_t turn;
     int8_t win = 0;
 
-    State(int bsize, int turn_);
+    State(uint16_t bsize, int8_t turn_);
 
     void SwitchTurn();
 
     uint16_t Find(uint16_t cell);
 
-    bool Union(uint16_t cell_a, uint8_t cell_b);
+    bool Union(uint16_t cell_a, uint16_t cell_b);
 
-    bool TestUnion(uint16_t cell_a, uint8_t cell_b);
+    bool TestUnion(uint16_t cell_a, uint16_t cell_b);
 
     bool Move(uint16_t cell);
 
@@ -38,4 +50,3 @@ struct State {
 };
 
 }
-#endif

@@ -22,6 +22,7 @@ struct vertex {
     float Y;
 };
 
+/*
 std::vector<vertex> geodesic_cords(int n) {
     if (n < 2) {
         throw "bruh";
@@ -38,32 +39,12 @@ std::vector<vertex> geodesic_cords(int n) {
         }
     }
 }
-
-namespace geodesic_y {
-    extern int n;
-    extern std::vector<std::vector<uint16_t>> graph;
-    extern std::vector<uint16_t> graph_left;
-    extern std::vector<uint16_t> graph_bottem;
-    extern std::vector<uint16_t> graph_right;
-}
+*/
 
 geodesic_y::State state(geodesic_y::n, 1);
 
-extern float cords[93][2];
 std::vector<vertex> vertices(geodesic_y::n);
 std::vector<sf::Vertex> edges;
-
-void print(const char* msg) {
-    std::cout << msg << std::endl;
-}
-
-void print(int msg) {
-    std::cout << msg << std::endl;
-}
-
-void print(float msg) {
-    std::cout << msg << std::endl;
-}
 
 float convertX(float x) {
     x -= 0.5f;
@@ -80,9 +61,10 @@ float convertY(float y) {
 }
 
 void load_cords() {
-    for (int i = 0; i < vertices.size(); i++) {
+    for (size_t i = 0; i < vertices.size(); i++) {
         vertices[i].X = convertX(cords[i][0]);
         vertices[i].Y = convertY(cords[i][1]);
+        // .at() for saftey.
     }
 }
 
@@ -97,7 +79,7 @@ sf::CircleShape circle(float x, float y, sf::Color color) {
 void draw(sf::RenderWindow* window) {
     window->clear();
     window->draw(edges.data(), edges.size(), sf::Lines);
-        for (int v = 0; v < vertices.size(); v++) {
+        for (size_t v = 0; v < vertices.size(); v++) {
             switch (state.board_[v].player) {
                 case 1:
                     window->draw(circle(vertices[v].X, vertices[v].Y, blue));
@@ -120,8 +102,8 @@ void run() {
 
     load_cords();
 
-    for (int i = 0; i < geodesic_y::graph.size(); i++) {
-        for (int j = 0; j < geodesic_y::graph[i].size(); j++) {
+    for (size_t i = 0; i < geodesic_y::graph.size(); i++) {
+        for (size_t j = 0; j < geodesic_y::graph[i].size(); j++) {
             if (i < geodesic_y::graph[i][j]) {
 
                 sf::Vertex vert1;
@@ -157,7 +139,7 @@ void run() {
                     int my = event.mouseButton.y;
                     float cmin = 1000;
                     int cv = -1;
-                    for (int v = 0; v < vertices.size(); v++) {
+                    for (size_t v = 0; v < vertices.size(); v++) {
                         float distance = sqrt(pow(vertices[v].X - mx, 2) + pow(vertices[v].Y - my, 2));
                         if (distance < radius && distance < cmin) {
                             cmin = distance;
@@ -168,7 +150,7 @@ void run() {
                         if (state.board_[cv].player == 0) {
                             state.Move(cv);
                             if (state.CheckWin() != 0) {
-                                print(state.win);
+                                print(int(state.win));
                                 print("won");
                                 draw(&window);
                                 std::cin.get();

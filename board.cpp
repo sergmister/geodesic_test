@@ -89,7 +89,7 @@ std::vector<std::vector<uint16_t>> geodesic_graph(int n) {
 
         if (b_right.size() > 0) {
             join(right[0], b_right[0]);
-            for (int j = 1; j < (right.size() - 1); j++) {
+            for (size_t j = 1; j < (right.size() - 1); j++) {
                 join(right[j], b_right[j - 1]);
                 join(right[j], b_right[j]);
             }
@@ -98,7 +98,7 @@ std::vector<std::vector<uint16_t>> geodesic_graph(int n) {
         }
         if (b_bottom.size() > 0) {
             join(bottom[0], b_bottom[0]);
-            for (int j = 1; j < (bottom.size() - 1); j++) {
+            for (size_t j = 1; j < (bottom.size() - 1); j++) {
                 join(bottom[j], b_bottom[j - 1]);
                 join(bottom[j], b_bottom[j]);
             }
@@ -107,7 +107,7 @@ std::vector<std::vector<uint16_t>> geodesic_graph(int n) {
         }
         if (b_left.size() > 0) {
             join(left[0], b_left[0]);
-            for (int j = 1; j < (left.size() - 1); j++) {
+            for (size_t j = 1; j < (left.size() - 1); j++) {
                 join(left[j], b_left[j - 1]);
                 join(left[j], b_left[j]);
             }

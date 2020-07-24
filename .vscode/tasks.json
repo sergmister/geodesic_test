@@ -6,13 +6,19 @@
         {
             "type": "shell",
             "label": "C/C++: g++ build active file",
-            "command": "/usr/bin/g++",
+            "command": "/usr/bin/clang++",
             "args": [
-                "-g",
-                "-O3",
+                "-g", // show source code in exe
+                "-O3", // optimizations
+                "-std=c++17", // newer
                 "${file}",
                 "board.cpp",
                 "geodesic_y.cpp",
+                "-Wall", "-Wextra", // for warnings
+                "-Wno-c++11-compat", // allow us to use new features.
+                "-Wno-c++14-compat", // allow us to use new features.
+                //"-fsanitize=address", // for debuging, shows errors in run time.
+                "-fsanitize=undefined,integer", // for clang, interger stuff, for development.
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
                 "-lsfml-graphics",
